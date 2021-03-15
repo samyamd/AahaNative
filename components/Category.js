@@ -3,19 +3,15 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  TouchableWithoutFeedback,
 } from "react-native";
 import { globalStyle } from "../globals";
-import Header from "./header";
-import Team from "./Teams";
-import ItemCard from "./itemCard";
 
-export default function Home() {
+export default function Category() {
   const [category, setCategory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://aahashop.com/wp-json/wp/v2/product")
+    fetch("https://aahashop.com/wp-json/wp/v2/categories")
       .then((response) => response.json())
       .then((json) => setProduct(json))
       .catch((error) => console.error(error))
@@ -25,9 +21,11 @@ export default function Home() {
   return (
 
       <View>
-          <Text style={{backgroundColor: "#eee", textAlign: "center", paddingVertical: 20}}>Top Categories</Text>
-          
-        <Team team={team} submitHandler={submitHandler} pressHandler={pressHandler}/>
+          <Text style={globalStyle.h1}>Top Categories</Text>
+          {loading ? <Text>Loading</Text> : (
+            <Image />
+            ) }
+        
       </View>
   );
 }

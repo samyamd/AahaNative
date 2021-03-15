@@ -37,7 +37,8 @@ export default function Teams({ team , submitHandler, pressHandler }) {
       </View>
       <FlatList
         numColumns={3}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
+        key={(item) => item.id}
         data={team}
         renderItem={({ item }) => (
           <View

@@ -28,7 +28,7 @@ export default function Header({ navigation }) {
         onPress={() => console.log("menu")}
       ></Ionicons>
       <Image
-        style={{ height: 40, width: 100, color: "#00215c" }}
+        style={{ height: 40, width: 100}}
         source={{
           uri:
             "https://aahashop.com/wp-content/uploads/2021/03/Aaha-shop-logo.png",

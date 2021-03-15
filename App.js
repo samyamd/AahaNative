@@ -1,12 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Home from './components/Home';
+// In App.js in a new project
 
-export default function App() {
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from './components/Home';
+import NewPage from './components/NewPage';
+
+const Stack = createStackNavigator();
+
+function App() {
   return (
-    <ScrollView>
-    <Home />
-    </ScrollView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Aahashop" component={NewPage} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+export default App;

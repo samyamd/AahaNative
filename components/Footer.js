@@ -4,16 +4,17 @@ import { globalStyle, ImageSize } from "../globals";
 import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from 'expo-web-browser';
 
-export default function Footer() {
-  const [quicks, setQuicks] = useState([
-    { id: 1, name: "Support Center", link: 24 },
-    { id: 2, name: "Terms and Conditions", link: 22 },
-    { id: 3, name: "Shipping", link: 25 },
-    { id: 4, name: "Privacy Policy", link: 29 },
-    { id: 5, name: "Help", link: 34 },
-    { id: 6, name: "Product Return", link: 14 },
-    { id: 7, name: "FAQs", link: 44 },
-  ]);
+export default function Footer({ navigation }) {
+  const quicks = [
+    { id: 0, name: "About Us", link: 'https://aahashop.com/about-us' },
+    { id: 1, name: "Support Center", link: 'https://aahashop.com/contact' },
+    { id: 2, name: "Terms and Conditions", link: 'https://aahashop.com/terms-and-conditions' },
+    { id: 3, name: "Shipping", link: 'https://aahashop.com/about-us' },
+    { id: 4, name: "Privacy Policy", link: 'https://aahashop.com/about-us' },
+    { id: 5, name: "Help", link: 'https://aahashop.com/about-us' },
+    { id: 6, name: "Product Return", link: 'https://aahashop.com/about-us' },
+    { id: 7, name: "FAQs", link: 'https://aahashop.com/faq' },
+  ];
 
   const _handleFb = async () => {
     await WebBrowser.openBrowserAsync('https://www.facebook.com/aahashop');
@@ -95,10 +96,10 @@ export default function Footer() {
           <Text style={globalStyle.h5}>Quick Links</Text>
           <FlatList
             style={globalStyle.my2}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             data={quicks}
             renderItem={({ item }) => (
-              <Text style={[globalStyle.p, globalStyle.py1]}>{item.name}</Text>
+              <Text style={[globalStyle.p, globalStyle.py1]} onPress={()=>{navigation.navigate("Aahashop", {uri: item.link})}}>{item.name}</Text>
             )}
           />
         </View>

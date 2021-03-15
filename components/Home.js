@@ -1,42 +1,40 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity, Image } from "react-native";
 import { globalStyle } from "../globals";
 import Header from "./header";
-import Team from "./Teams";
+import Category from "./Category";
 import ItemCard from "./itemCard";
 import Footer from "./Footer";
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [isLoading, setLoading] = useState(true);
-  const [team, setTeam] = useState([
-    { id: 1, name: "Samyam", age: 24 },
-    { id: 2, name: "Gaurav", age: 22 },
-    { id: 3, name: "Raja", age: 25 },
-    { id: 4, name: "Ram", age: 29 },
-    { id: 5, name: "Om", age: 34 },
-    { id: 6, name: "Hari", age: 14 },
-    { id: 7, name: "Sanjib", age: 44 },
-  ]);
+  // const [team, setTeam] = useState([
+  //   { id: 1, name: "Samyam", age: 24 },
+  //   { id: 2, name: "Gaurav", age: 22 },
+  //   { id: 3, name: "Raja", age: 25 },
+  //   { id: 4, name: "Ram", age: 29 },
+  //   { id: 5, name: "Om", age: 34 },
+  //   { id: 6, name: "Hari", age: 14 },
+  //   { id: 7, name: "Sanjib", age: 44 },
+  // ]);
   const [product, setProduct] = useState([]);
+  // const [image, setImage] = useState([]);
 
-  const pressHandler = (key) => {
-    setTeam((oldTeam)=> {
-      return oldTeam.filter(todo=>todo.key != key)
-    })
-  }
+  // const pressHandler = (key) => {
+  //   setTeam((oldTeam) => {
+  //     return oldTeam.filter((todo) => todo.key != key);
+  //   });
+  // };
 
-  const submitHandler = (name, age) => {
-    setTeam((oldTeam) => {
-      return [...oldTeam, { id: Math.random.toString(), name: name, age: age }];
-    });
-  };
-
+  // const submitHandler = (name, age) => {
+  //   setTeam((oldTeam) => {
+  //     return [...oldTeam, { id: Math.random.toString(), name: name, age: age }];
+  //   });
+  // };
+  // const handlePressButtonAsync = (media) => {
+    
+  //   console.log(media);
+  // };
   useEffect(() => {
     fetch("https://aahashop.com/wp-json/wp/v2/product")
       .then((response) => response.json())
@@ -46,32 +44,45 @@ export default function Home() {
   }, []);
 
   return (
-    <TouchableWithoutFeedback onPress={()=> {
-      // Keyboard.dismiss()
-    }}>
+    <ScrollView>
       <View>
         <Header />
-        <ScrollView style={styles.itemcontainer} horizontal={true}>
+        {/* <ScrollView style={[styles.itemcontainer, {overflow: "scroll"}]} horizontal={true}>
           {isLoading ? (
             <Text style={globalStyle.h1}>Loading...</Text>
           ) : (
-            product.map((item) => <ItemCard product={item} />)
+            product.map((item) => <ItemCard product={item} handlePressButtonAsync={handlePressButtonAsync}/>)
           )}
-        </ScrollView>
+        </ScrollView> */}
 
-        {/* <Alert
-    variant="Primary"
-    messageStyle={{ fontSize: 16 }}
-    message={`This is a Primary alert!`}
-  /> */}
-        {/* <Alert title="Heading" message="This is a primary alert—check it out!" /> */}
+        <Text style={globalStyle.h1}>Recent Products</Text>
 
-        <Team team={team} submitHandler={submitHandler} pressHandler={pressHandler}/>
-      
-      <Footer />
+        <FlatList
+          keyExtractor={(item) => item.id.toString()}
+        
+          data={product}
+          renderItem={({ item }) =>
+            isLoading ? (
+              <Text style={globalStyle.h1}>Loading...</Text>
+            ) : (
+              <ItemCard
+                product={item}
+              />
+            )
+          }
+        />
+
+        {/* <Team
+          team={team}
+          submitHandler={submitHandler}
+          pressHandler={pressHandler}
+        /> */}
+        <Category />
+
+        <Footer navigation={navigation} />
       </View>
-    </TouchableWithoutFeedback>
-  );
+    </ScrollView>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -79,6 +90,25 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     padding: 16,
+  },
+  card: {
+    backgroundColor: "#eee",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "red",
+    marginHorizontal: 10,
+    padding: 10,
+  },
+  cardHeader: {
+    marginBottom: 10,
+    textAlign: "center",
+    marginHorizontal: "auto",
+  },
+  cardBody: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 
