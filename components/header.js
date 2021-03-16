@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image } from "react-native";
-import { Ionicons } from "@expo/vector-icons";  
+import { StyleSheet,Text, View, Image, TextInput, Button, TouchableHighlight } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { globalStyle } from "../globals";
 
 export default function Header({ navigation }) {
-  const [name, setName] = useState("Samyam");
-  const clickMenu = () => {
-    setName("Dabadi");
+  const [visible, setVisible] = useState(false);
+  const [value, setValue] = useState("");
+  const searchShow = () => {
+    setVisible(!visible);
   };
   // const Drawer = createDrawerNavigator();
   return (
-    <View style={[globalStyle.flexRow, globalStyle.flexBetween,styles.header]}>
-          {/* <NavigationContainer>
+    <View>
+      <View
+        style={[globalStyle.flexRow, globalStyle.flexBetween, styles.header]}
+      >
+        {/* <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
       <Ionicons
         name="menu-outline"
@@ -22,24 +26,43 @@ export default function Header({ navigation }) {
         <Drawer.Screen name="Notifications" component={NavigationDrawer} />
       </Drawer.Navigator>
     </NavigationContainer> */}
-      <Ionicons
-        name="menu-outline"
-        style={styles.font100}
-        onPress={() => console.log("menu")}
-      ></Ionicons>
-      <Image
-        style={{ height: 40, width: 100}}
-        source={{
-          uri:
-            "https://aahashop.com/wp-content/uploads/2021/03/Aaha-shop-logo.png",
-        }}
-      />
+        <Ionicons
+          name="menu-outline"
+          style={globalStyle.font100}
+          onPress={() => console.log("menu")}
+        ></Ionicons>
+        <Image
+          style={{ height: 40, width: 100 }}
+          source={{
+            uri:
+              "https://aahashop.com/wp-content/uploads/2021/03/Aaha-shop-logo.png",
+          }}
+        />
 
-      <View style={styles.flex}>
-        <Ionicons name="search-outline" style={[styles.font100, styles.mr3]}></Ionicons>
-        <Ionicons name="cart-outline" style={styles.font100}></Ionicons>
+        <View style={styles.flex}>
+          <Ionicons
+            name="search-outline"
+            style={[globalStyle.font100, globalStyle.mr3]}
+            onPress={searchShow}
+          ></Ionicons>
+          <Ionicons name="cart-outline" style={globalStyle.font100}></Ionicons>
+        </View>
+        {/* <Text style={styles.whiteText}>Hello World</Text> */}
       </View>
-      {/* <Text style={styles.whiteText}>Hello World</Text> */}
+      {visible ? (
+        <View style={[globalStyle.flexRow, globalStyle.p10]}>
+          <TextInput placeholder="Find your product" style={globalStyle.py10, globalStyle.border, {height: 40, flex: 5 }} value={value} />
+          <TouchableHighlight onPress={()=> console.log('ASD')}>
+          <View style={[globalStyle.themebg,globalStyle.py10, globalStyle.px20,{ flex: 1, alignItems: "center", justifyContent: "center"} ]}>
+            <Ionicons
+              name="search-outline"
+              style={[globalStyle.font100, globalStyle.gray]}
+            ></Ionicons>
+          </View>
+          </TouchableHighlight>
+        </View>
+      ) : (<Text></Text>)
+      }
     </View>
   );
 }
@@ -49,7 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee"
+    borderBottomColor: "#eee",
   },
   whiteText: {
     color: "#FFF",
@@ -59,10 +82,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
   },
-  font100: {
-    fontSize: 30,
-  },
-  mr3: {
-    marginRight: 3
-  }
 });

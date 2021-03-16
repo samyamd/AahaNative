@@ -25,7 +25,6 @@ export default function Category() {
           {loading ? <Text>Loading</Text> : (
             <Image />
             ) }
-        
       </View>
   );
 }

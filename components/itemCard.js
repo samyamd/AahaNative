@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { globalStyle } from "../globals";
 
-export default function ItemCard({ product }) {
+export default function ItemCard({ product, navigation }) {
   const [result, setResult] = useState(true);
   const [loading, setLoading] = useState([]);
 
@@ -26,11 +26,11 @@ export default function ItemCard({ product }) {
   }
 
   return (
-    <View style={styles.card}>
-      <View style={styles.cardHeader}>
+    <View style={[styles.card,styles.centred]}>
+      <View style={[styles.cardHeader]}>
         {loading ? <Text>Loading</Text> :
         <Image
-          style={{ height: 300, width: 300 }}
+          style={{ height: 260, width: 260 }}
           source={{ uri: result.guid.rendered }}
           // source={{
           //   uri:
@@ -39,14 +39,16 @@ export default function ItemCard({ product }) {
         />
       }
       </View>
+      <View style={styles.cardBody}>
       <TouchableOpacity
-        style={styles.cardBody}
         onPress={() => {
           navigation.navigate("Aahashop", { uri: product.link });
         }}
       >
-        <Text style={globalStyle.h4}>{product.title.rendered}</Text>
+        <Text style={[globalStyle.h2]}>{product.title.rendered}</Text>
+        <Text style={[globalStyle.h2, globalStyle.theme, {color: "blue",textAlign: "center"}]}>Rs. 3000</Text>
       </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -57,19 +59,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: "#eee",
-    marginHorizontal: 10,
     marginTop: 10,
-    padding: 10,
+    padding: 15,
+    justifyContent: "center",
+    alignItems: 'center'
   },
   cardHeader: {
     marginBottom: 10,
-    justifyContent: "center",
-    alignItems: 'center'
+    backgroundColor: "#fff",
   },
   cardBody: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
   },
+  
 });

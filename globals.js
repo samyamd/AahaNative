@@ -8,6 +8,9 @@ import { StyleSheet } from "react-native";
 var themeColor = "#131A46";
 
 export const globalStyle = StyleSheet.create({
+  font100: {
+    fontSize: 30,
+  },
   container: {
     flex: 1,
     padding: 20,
@@ -74,6 +77,11 @@ export const globalStyle = StyleSheet.create({
   themebg: {
     backgroundColor: themeColor,
   },
+  border: {
+    borderColor: "#777",
+    borderWidth: 1
+  },
+  //margins
   mr1: {
     marginRight: 1,
   },
@@ -116,6 +124,16 @@ export const globalStyle = StyleSheet.create({
   py1: {
     paddingVertical: 4,
   },
+  py10: {
+    paddingVertical: 10,
+  },
+  px10: {
+    paddingHorizontal: 10
+  },
+  px20: {
+    paddingHorizontal: 20
+  },
+
   my2: {
     marginVertical: 8,
   },

@@ -67,6 +67,7 @@ export default function Home({ navigation }) {
             ) : (
               <ItemCard
                 product={item}
+                navigation={navigation}
               />
             )
           }
@@ -77,7 +78,7 @@ export default function Home({ navigation }) {
           submitHandler={submitHandler}
           pressHandler={pressHandler}
         /> */}
-        <Category />
+        {/* <Category /> */}
 
         <Footer navigation={navigation} />
       </View>
