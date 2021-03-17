@@ -1,14 +1,30 @@
 import React, { useState } from "react";
-import { StyleSheet,Text, View, Image, TextInput, Button, TouchableHighlight } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  Button,
+  TouchableHighlight,
+  TouchableOpacity,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { globalStyle } from "../globals";
+import Search from "./Search";
 
-export default function Header({ navigation }) {
+export default function Header({ navigation, product }) {
   const [visible, setVisible] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(false);
+  const [searchData, setSearchData] = useState("");
   const searchShow = () => {
     setVisible(!visible);
   };
+  var filterproducts = product.filter((products) => {
+    return products.title.rendered
+      .toUpperCase()
+      .includes(searchData.toUpperCase());
+  });
   // const Drawer = createDrawerNavigator();
   return (
     <View>
@@ -50,19 +66,38 @@ export default function Header({ navigation }) {
         {/* <Text style={styles.whiteText}>Hello World</Text> */}
       </View>
       {visible ? (
-        <View style={[globalStyle.flexRow, globalStyle.p10]}>
-          <TextInput placeholder="Find your product" style={globalStyle.py10, globalStyle.border, {height: 40, flex: 5 }} value={value} />
-          <TouchableHighlight onPress={()=> console.log('ASD')}>
-          <View style={[globalStyle.themebg,globalStyle.py10, globalStyle.px20,{ flex: 1, alignItems: "center", justifyContent: "center"} ]}>
-            <Ionicons
-              name="search-outline"
-              style={[globalStyle.font100, globalStyle.gray]}
-            ></Ionicons>
+        <View>
+          <View style={[globalStyle.flexRow, globalStyle.p10]}>
+            <TextInput
+              onChangeText={(text)=> setSearchData(text)}
+              onKeyPress={()=>setValue(true)}
+              value={searchData}
+              placeholder="Find your product"
+              style={
+                (globalStyle.py10, globalStyle.border, { height: 40, flex: 5 })
+              }
+            />
+            <TouchableHighlight onPress={() => console.log("ASD")}>
+              <View
+                style={[
+                  globalStyle.themebg,
+                  globalStyle.py10,
+                  globalStyle.px20,
+                  { flex: 1, alignItems: "center", justifyContent: "center" },
+                ]}
+              >
+                <Ionicons
+                  name="search-outline"
+                  style={[globalStyle.font100, globalStyle.gray]}
+                ></Ionicons>
+              </View>
+            </TouchableHighlight>
           </View>
-          </TouchableHighlight>
+          {value ? <Search products={filterproducts} navigation={navigation} /> : <Text></Text>}
         </View>
-      ) : (<Text></Text>)
-      }
+      ) : (
+        <Text></Text>
+      )}
     </View>
   );
 }

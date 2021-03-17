@@ -15,6 +15,10 @@ export const globalStyle = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  box: {
+    backgroundColor: "#FFFFFF",
+    padding: 20
+  },
   flexRow: {
     display: "flex",
     flexDirection: "row",

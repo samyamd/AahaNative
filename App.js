@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './components/Home';
 import NewPage from './components/NewPage';
+// import WebView from 'react-native-webview';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,8 @@ function App() {
         <Stack.Screen name="Aahashop" component={NewPage} />
       </Stack.Navigator>
     </NavigationContainer>
+
+    // <WebView source={{ uri: "https://aahashop.com/" }} />
   );
 }
 

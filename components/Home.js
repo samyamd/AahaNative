@@ -46,7 +46,7 @@ export default function Home({ navigation }) {
   return (
     <ScrollView>
       <View>
-        <Header />
+        <Header product={product} navigation={navigation}/>
         {/* <ScrollView style={[styles.itemcontainer, {overflow: "scroll"}]} horizontal={true}>
           {isLoading ? (
             <Text style={globalStyle.h1}>Loading...</Text>
