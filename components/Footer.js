@@ -24,7 +24,7 @@ export default function Footer({ navigation }) {
   }
   return (
     <View>
-      <View style={globalStyle.footer}>
+      {/* <View style={globalStyle.footer}>
         <View style={[globalStyle.flexRow, globalStyle.flexBetween]}>
 
         <Image
@@ -103,7 +103,7 @@ export default function Footer({ navigation }) {
             )}
           />
         </View>
-      </View>
+      </View> */}
       <View
         style={[globalStyle.p10, globalStyle.themebg, { textAlign: "center" }]}
       >

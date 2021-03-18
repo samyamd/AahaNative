@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { globalStyle } from "../globals";
+import {decode} from 'html-entities';
 
 export default function ItemCard({ product, navigation }) {
   const [result, setResult] = useState(true);
@@ -21,34 +22,52 @@ export default function ItemCard({ product, navigation }) {
         .then((response) => response.json())
         .then((json) => setResult(json))
         .catch((error) => console.error(error))
-        .finally(()=>setLoading(false))
+        .finally(() => setLoading(false));
     }, []);
   }
 
   return (
-    <View style={[styles.card,styles.centred]}>
-      <View style={[styles.cardHeader]}>
-        {loading ? <Text>Loading</Text> :
-        <Image
-          style={{ height: 260, width: 260 }}
-          source={{ uri: result.guid.rendered }}
-          // source={{
-          //   uri:
-          //     "https://aahashop.com/wp-content/uploads/2018/04/01-221x221.png",
-          // }}
-        />
-      }
-      </View>
-      <View style={styles.cardBody}>
+    <View style={{flex: 1}}>
+    {/* <View> */}
       <TouchableOpacity
+        style={[styles.card, styles.centred]}
+        // style={[styles.card, styles.centred, {alignSelf: "center"}]}
         onPress={() => {
           navigation.navigate("Aahashop", { uri: product.link });
         }}
       >
-        <Text style={[globalStyle.h2]}>{product.title.rendered}</Text>
-        <Text style={[globalStyle.h2, globalStyle.theme, {color: "blue",textAlign: "center"}]}>Rs. 3000</Text>
+        <View style={[styles.cardHeader]}>
+          {loading ? (
+            <Text>Loading</Text>
+          ) : (
+            <Image
+              style={{ height: 120, width: 120 }}
+              source={{ uri: result.guid.rendered }}
+              // source={{
+              //   uri:
+              //     "https://aahashop.com/wp-content/uploads/2018/04/01-221x221.png",
+              // }}
+            />
+          )}
+        </View>
+        <View style={styles.cardBody}>
+          <Text style={[globalStyle.h2, globalStyle.theme]}>
+          {decode(product.title.rendered, {level: 'html5'})}
+
+            </Text>
+          <View style={globalStyle.flexRow}>
+            <Text style={[globalStyle.h2, globalStyle.light,globalStyle.mr4, {textDecorationLine:"line-through"}]}>Rs. 3300</Text>
+            <Text
+              style={[
+                globalStyle.h2,
+                globalStyle.theme,globalStyle.ml4,
+              ]}
+            >
+              Rs. 3000
+            </Text>
+          </View>
+        </View>
       </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -58,11 +77,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderWidth: 1,
     borderStyle: "solid",
-    borderColor: "#eee",
-    marginTop: 10,
+    borderRadius: 10,
+    borderBottomRightRadius: 99,
+    borderColor: "red",
+    margin: 10,
     padding: 15,
-    justifyContent: "center",
-    alignItems: 'center'
+    // maxWidth: 400,
+    // width: 400
   },
   cardHeader: {
     marginBottom: 10,
@@ -70,7 +91,9 @@ const styles = StyleSheet.create({
   },
   cardBody: {
     display: "flex",
-    flexDirection: "row",
+    alignItems: "center",
   },
-  
+  centred: {
+    alignItems: "center"
+  }
 });

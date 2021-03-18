@@ -4,7 +4,7 @@ import { WebView } from "react-native-webview";
 import { globalStyle } from "../globals";
 
 const runFirst = `let selector = document.querySelector(".xs-footer-section");
-  var txt = '<div class="alert alert-success h1 alert-dismissible fade show" role="alert">Footer changed to alert hai allah<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+  var txt = '<div class="w-100 py-3 bg-light text-center mx-auto" style="position: fixed; bottom: 0; z-index: 1000000"><div class="row"><div class="col-3"><a class="d-flex flex-column" href="./index.html"><i class="fa fa-home"></i><span>Home</span></a></div><div class="col-3"><a class="d-flex flex-column" href="./login.html"><i class="fa fa-search"></i><span>Search</span></a></div><div class="col-3"><a class="d-flex flex-column" href="./register.html"><i class="fa fa-calculator"></i><span>Login</span></a></div><div class="col-3"><a class="d-flex flex-column" href="https://aahashop.com/?v=8bc2afe7028c"><i class="fa fa-user"></i><span>Account</span></a></div></div></div>'
   selector.innerHTML = txt;
   true; // note: this is required, or you'll sometimes get silent failures
 `

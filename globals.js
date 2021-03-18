@@ -85,6 +85,9 @@ export const globalStyle = StyleSheet.create({
     borderColor: "#777",
     borderWidth: 1
   },
+  textCenter: {
+    textAlign: "center"
+  },
   //margins
   mr1: {
     marginRight: 1,
