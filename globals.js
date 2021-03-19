@@ -30,6 +30,10 @@ export const globalStyle = StyleSheet.create({
   flexBetween: {
     justifyContent: "space-between",
   },
+  flexCenter: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
 
   //Image
   // image: {
@@ -84,6 +88,15 @@ export const globalStyle = StyleSheet.create({
   border: {
     borderColor: "#777",
     borderWidth: 1
+  },
+  borderH: {
+    borderColor: "#777",
+    borderLeftWidth: 1,
+    borderRightWidth: 1
+  },
+  borderT: {
+    borderColor: "#777",
+    borderTopWidth: 1,
   },
   textCenter: {
     textAlign: "center"

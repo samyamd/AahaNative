@@ -49,10 +49,10 @@
 //       <Ionicons
 //         name="menu-outline"
 //         style={styles.font100}
-//         onPress={() => navigation.navigate(NavigationDrawer)}
+//         onPress={() => navigation.navigate(BottomNav)}
 //       ></Ionicons>
 
-//         <Drawer.Screen name="Notifications" component={NavigationDrawer} />
+//         <Drawer.Screen name="Notifications" component={BottomNav} />
 //       </Drawer.Navigator>
 //     </NavigationContainer> */}
 //         <Ionicons
@@ -138,15 +138,11 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
-  Button,
-  TouchableHighlight,
-  TouchableOpacity,
+  TouchableOpacity, FlatList
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { globalStyle } from "../globals";
-import Search from "./Search";
+import {decode} from 'html-entities';
 
 export default function Header({ navigation, product }) {
 
@@ -155,7 +151,7 @@ export default function Header({ navigation, product }) {
   const [searchData, setSearchData] = useState("");
   const searchShow = () => {
     if (searchData != "") {
-      console.log(searchData);
+      // console.log(searchData);
       setValue(true)
     } else {
       setValue(false)
@@ -182,7 +178,25 @@ export default function Header({ navigation, product }) {
           }
         />
       </View>
-      {value ? <Search products={filterproducts} navigation={navigation} /> : <Text></Text>}
+      {value ? <FlatList
+            style={globalStyle.my2}
+            keyExtractor={(item) => item.id.toString()}
+            data={filterproducts}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+              style={globalStyle.box}
+                onPress={() => {
+                  setSearchData("");
+                  setValue(false);
+                  navigation.navigate("Aahashop", { uri: item.link });
+                }}
+              >
+                <Text style={[globalStyle.p, globalStyle.py1]}>
+                  {decode(item.title.rendered, {level: 'html5'})}
+                </Text>
+              </TouchableOpacity>
+            )}
+          /> : <Text></Text>}
     </View>
   )
 }
