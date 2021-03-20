@@ -11,36 +11,46 @@ const runFirst = `let selector = document.querySelector(".xs-footer-section");
   true; // note: this is required, or you'll sometimes get silent failures
 `;
 
-export default function NewPage({ route }) {
+export default function NewPage({ navigation, route }) {
   const [canGoBack, setCanGoBack] = useState(false)
+  const [currentUrl, setCurrentUrl] = useState(route.params.uri)
   const webviewRef = useRef(null)
 
- const backButtonHandler = () => {
-    if (webviewRef.current) webviewRef.current.goBack()
-    console.log("welcome")
-  } 
-  
-  useEffect(()=> {
+  const backButtonHandler = () => {
+
+    if (canGoBack) {
+      console.log(canGoBack);
+      webviewRef.current.goBack()
+    } else {
+      navigation.goBack()
+    }
+    return true;
+  }
+  console.log(currentUrl);
+  useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backButtonHandler);
     return () =>
-    BackHandler.removeEventListener('hardwareBackPress',backButtonHandler)
-  })
+      BackHandler.removeEventListener('hardwareBackPress', backButtonHandler)
+  }, [canGoBack])
 
   return (<WebView
-        source={{ uri: route.params.uri }}
-        injectedJavaScript={runFirst}
-        renderLoading={() => (
-          <ActivityIndicator
-            color='black'
-            size='large'
-            style={{flex: 1}}
-          />
-        )}
-        ref={webviewRef}
-        onNavigationStateChange={navState => {
-          setCanGoBack(navState.canGoBack)
-        }}
+    ref={webviewRef}
+    source={{ uri: currentUrl }}
+    injectedJavaScript={runFirst}
+    renderLoading={() => (
+      <ActivityIndicator
+        color='black'
+        size='large'
+        style={{ flex: 1 }}
       />
+    )}
+    onNavigationStateChange={navState => {
+      setCanGoBack(navState.canGoBack);
+      setCurrentUrl(navState.url);
+      console.log(canGoBack);
+
+    }}
+  />
   );
   // return <View style={[globalStyle.container, globalStyle.p10]}>
   // <Text>New Page {route.params.slug}</Text>
