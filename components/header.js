@@ -7,10 +7,14 @@ import {
   TextInput,
   Animated,
   TouchableHighlight,
+  StatusBar,
+  FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { globalStyle } from "../globals";
 import Search from "./Search";
+import {decode} from 'html-entities';
 
 export default function Header({ navigation, product, setDrawer }) {
   const [visible, setVisible] = useState(false);
@@ -28,17 +32,14 @@ export default function Header({ navigation, product, setDrawer }) {
   });
   // const Drawer = createDrawerNavigator();
   return (
-    <View style={{marginTop: 30}}>
-      {/* Navigation drawer */}
-
-      {/* Drawer end */}
+    <View style={{ marginTop: StatusBar.currentHeight }}>
       <View
-        style={[globalStyle.flexRow, globalStyle.flexBetween, styles.header]}
+        style={[globalStyle.flexRow, globalStyle.flexBetween, styles.header, {backgroundColor: "#eee"}]}
       >
         <Ionicons
           name="menu-outline"
           style={globalStyle.font100}
-          onPress={()=>setDrawer(true)}
+          onPress={() => setDrawer(true)}
         ></Ionicons>
         <Image
           style={{ height: 40, width: 100 }}
@@ -51,45 +52,42 @@ export default function Header({ navigation, product, setDrawer }) {
         <View style={styles.flex}>
           <Ionicons
             name="search-outline"
-            style={[globalStyle.font100, globalStyle.mr3]}
+            style={[globalStyle.font100, globalStyle.mr5]}
             onPress={searchShow}
           ></Ionicons>
-          <Ionicons name="cart-outline" style={globalStyle.font100}></Ionicons>
+          <Ionicons
+            name="cart-outline"
+            style={globalStyle.font100}
+            onPress={() => {
+              navigation.navigate("Aahashop", {
+                uri: "https://aahashop.com/cart/",
+              });
+            }}
+          ></Ionicons>
         </View>
         {/* <Text style={styles.whiteText}>Hello World</Text> */}
       </View>
       {visible ? (
         <View>
-          <View style={[globalStyle.flexRow, globalStyle.p10]}>
+          <View style={[globalStyle.flexRow, globalStyle.p5]}>
             <TextInput
-              onChangeText={(text)=> setSearchData(text)}
-              onKeyPress={()=>setValue(true)}
+              onChangeText={(text) => setSearchData(text)}
+              onKeyPress={() => setValue(true)}
               value={searchData}
               placeholder="Find your product"
               style={
-                (globalStyle.py10, globalStyle.border, { height: 40, flex: 5 })
+                [globalStyle.px10, globalStyle.border, {width:"100%", borderRadius:10}]
               }
             />
-            <TouchableHighlight onPress={() => console.log("ASD")}>
-              <View
-                style={[
-                  globalStyle.themebg,
-                  globalStyle.py10,
-                  globalStyle.px20,
-                  { flex: 1, alignItems: "center", justifyContent: "center" },
-                ]}
-              >
-                <Ionicons
-                  name="search-outline"
-                  style={[globalStyle.font100, globalStyle.gray]}
-                ></Ionicons>
-              </View>
-            </TouchableHighlight>
           </View>
-          {value ? <Search products={filterproducts} navigation={navigation} /> : <Text></Text>}
+          {value ? (
+            <Search products={filterproducts} navigation={navigation} setSearchData={setSearchData} setValue={setValue} />
+          ) : (
+            null
+          )}
         </View>
       ) : (
-        <Text></Text>
+        null
       )}
     </View>
   );
@@ -99,8 +97,6 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 16,
     paddingVertical: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
   },
   whiteText: {
     color: "#FFF",
@@ -111,7 +107,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
 });
-
 
 // import React, { useState } from "react";
 // import {
@@ -198,4 +193,3 @@ const styles = StyleSheet.create({
 //     justifyContent: "flex-end",
 //   },
 // });
-

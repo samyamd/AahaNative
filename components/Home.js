@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, FlatList, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Dimensions,
+  Modal,
+  TouchableOpacity,
+} from "react-native";
 import { globalStyle } from "../globals";
 import Header from "./header";
 import ItemCard from "./itemCard";
@@ -23,50 +31,77 @@ export default function Home({ navigation }) {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Header product={product} navigation={navigation} style={{flex: .1}} setDrawer={setDrawer} />
-      {drawer ? (<View style={globalStyle.drawer}>
-      <Text style={globalStyle.h1}>Samyam</Text>
-      <View style={globalStyle.flexRow, globalStyle.my5}>
-        <Ionicons name="menu-outline"
-          style={[globalStyle.font100, globalStyle.p10, {flex:2}]}
-          onPress={() => console.log("account")} />
-        <Ionicons name="menu-outline"
-          style={[globalStyle.font100, {flex:2}]}
-          onPress={() => console.log("account")} />
-        <Ionicons name="menu-outline"
-          style={[globalStyle.font100, {flex:1}]}
-          onPress={() => console.log("close")} />
-      </View>
-    </View>) : <View></View>
-    }
+    <View style={{ flex: 1,backgroundColor: "#FFF" }}>
+      <Header
+        product={product}
+        navigation={navigation}
+        setDrawer={setDrawer}
+      />
+      {drawer ? (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={drawer}
+          onRequestClose={() => {
+            console.log("OUT");
+            setDrawer(false);
+          }}
+        >
+          <TouchableOpacity style={globalStyle.drawer} activeOpacity={1}>
+            <View style={{ backgroundColor: "#FFF", padding: 10 }}>
+              <TouchableOpacity style={{ alignItems: "flex-end" }}>
+                <Ionicons
+                  name="close-outline"
+                  style={globalStyle.font100}
+                  onPress={() => setDrawer(false)}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ padding: 10 }}>
+              <Text>Here you put the content of your modal.</Text>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      ) : null
+      }
       <FlatList
-      style={{flex: .8}}
+        style={{ flex: .8 }}
         ListHeaderComponent={
-          <View style={{ backgroundColor: "#ffffff" }}>
+          <View>
             {/* <ImageSlider /> */}
 
             <Text
-              style={[globalStyle.h1, globalStyle.textCenter, globalStyle.my5]}
+              style={[globalStyle.h1, globalStyle.textCenter, globalStyle.m35]}
             >
               Recent Products
             </Text>
           </View>
         }
-        
         ListEmptyComponent={<Text>Loading</Text>}
         keyExtractor={(item) => item.id.toString()}
         horizontal={false}
         numColumns={width > 600 ? 2 : 1}
         data={product}
         renderItem={({ item }) => (
-          <ItemCard product={item} navigation={navigation} />
+          <ItemCard
+            product={item}
+            navigation={navigation}
+            setDrawer={setDrawer}
+          />
         )}
         ListFooterComponent={
           <View>
             <View style={{ backgroundColor: "#ffffff" }}>
-          <Text style={[globalStyle.h1, globalStyle.textCenter, globalStyle.my5]}>Offered Categories</Text>
-        </View>
+              <Text
+                style={[
+                  globalStyle.h1,
+                  globalStyle.textCenter,
+                  globalStyle.my5,
+                ]}
+              >
+                Offered Categories
+              </Text>
+            </View>
             <Category navigation={navigation} />
             <Footer navigation={navigation} />
           </View>

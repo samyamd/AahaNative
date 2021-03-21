@@ -20,7 +20,7 @@ function App() {
         {/* <Stack.Screen name="Aahashop" component={NewPage} options={{ headerLeft: null }} /> */}
         <Stack.Screen name="Aahashop" component={NewPage} options={pos} />
       </Stack.Navigator>
-      {/* <BottomNav style={{flex: .1}}/> */}
+      <BottomNav style={{flex: .1}}/>
     </NavigationContainer>
 
     // <WebView source={{ uri: "https://aahashop.com/" }} />

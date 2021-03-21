@@ -169,6 +169,9 @@ export const globalStyle = StyleSheet.create({
   p10: {
     padding: 20,
   },
+  p5: {
+    padding: 10,
+  },
 
   //   Footer
   footer: {
@@ -181,10 +184,7 @@ export const globalStyle = StyleSheet.create({
     width: "80%",
     height: "100%",
     backgroundColor: "#EEEEEE",
-    borderColor: "#000",
-    borderWidth: 2,
-    position: "absolute",
-    top: 0,    
+    position: "absolute",  
     elevation: 10,
     left: 0
   },
