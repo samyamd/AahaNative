@@ -17,7 +17,7 @@ export const globalStyle = StyleSheet.create({
   },
   box: {
     backgroundColor: "#FFFFFF",
-    padding: 20
+    padding: 20,
   },
   flexRow: {
     display: "flex",
@@ -32,7 +32,7 @@ export const globalStyle = StyleSheet.create({
   },
   flexCenter: {
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   //Image
@@ -87,19 +87,19 @@ export const globalStyle = StyleSheet.create({
   },
   border: {
     borderColor: "#777",
-    borderWidth: 1
+    borderWidth: 1,
   },
   borderH: {
     borderColor: "#777",
     borderLeftWidth: 1,
-    borderRightWidth: 1
+    borderRightWidth: 1,
   },
   borderT: {
     borderColor: "#777",
     borderTopWidth: 1,
   },
   textCenter: {
-    textAlign: "center"
+    textAlign: "center",
   },
   //margins
   mr1: {
@@ -148,10 +148,10 @@ export const globalStyle = StyleSheet.create({
     paddingVertical: 10,
   },
   px10: {
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   px20: {
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
 
   my2: {
@@ -167,7 +167,7 @@ export const globalStyle = StyleSheet.create({
     marginVertical: 20,
   },
   p10: {
-      padding: 20
+    padding: 20,
   },
 
   //   Footer
@@ -175,5 +175,17 @@ export const globalStyle = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: "#eee",
+  },
+
+  drawer: {
+    width: "80%",
+    height: "100%",
+    backgroundColor: "#EEEEEE",
+    borderColor: "#000",
+    borderWidth: 2,
+    position: "absolute",
+    top: 0,    
+    elevation: 10,
+    left: 0
   },
 });

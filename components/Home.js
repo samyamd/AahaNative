@@ -5,13 +5,15 @@ import Header from "./header";
 import ItemCard from "./itemCard";
 import Footer from "./Footer";
 // import ImageSlider from "./ImageSlider";
-import BottomNav from "./BottomNav";
+// import BottomNav from "./BottomNav";
+import { Ionicons } from "@expo/vector-icons";
 import Category from "./Category";
 
 export default function Home({ navigation }) {
   var width = Dimensions.get("window").width;
   // const entities = Html5Entities();
   const [product, setProduct] = useState([]);
+  const [drawer, setDrawer] = useState(false);
 
   useEffect(() => {
     fetch("https://aahashop.com/wp-json/wp/v2/product")
@@ -22,14 +24,22 @@ export default function Home({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header product={product} navigation={navigation} style={{flex: .1}}/>
-      {/* <ScrollView style={[styles.itemcontainer, {overflow: "scroll"}]} horizontal={true}>
-          {isLoading ? (
-            <Text style={globalStyle.h1}>Loading...</Text>
-          ) : (
-            product.map((item) => <ItemCard product={item} handlePressButtonAsync={handlePressButtonAsync}/>)
-          )}
-        </ScrollView> */}
+      <Header product={product} navigation={navigation} style={{flex: .1}} setDrawer={setDrawer} />
+      {drawer ? (<View style={globalStyle.drawer}>
+      <Text style={globalStyle.h1}>Samyam</Text>
+      <View style={globalStyle.flexRow, globalStyle.my5}>
+        <Ionicons name="menu-outline"
+          style={[globalStyle.font100, globalStyle.p10, {flex:2}]}
+          onPress={() => console.log("account")} />
+        <Ionicons name="menu-outline"
+          style={[globalStyle.font100, {flex:2}]}
+          onPress={() => console.log("account")} />
+        <Ionicons name="menu-outline"
+          style={[globalStyle.font100, {flex:1}]}
+          onPress={() => console.log("close")} />
+      </View>
+    </View>) : <View></View>
+    }
       <FlatList
       style={{flex: .8}}
         ListHeaderComponent={
@@ -63,14 +73,7 @@ export default function Home({ navigation }) {
         }
       />
 
-      <BottomNav style={{flex: .1}}/>
-
-      {/* <Team
-          team={team}
-          submitHandler={submitHandler}
-          pressHandler={pressHandler}
-        /> */}
-      {/* <Category /> */}
+      {/* <BottomNav style={{flex: .1}}/> */}
     </View>
   );
 }
