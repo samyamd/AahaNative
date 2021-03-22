@@ -1,20 +1,14 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Image,
   TextInput,
-  Animated,
-  TouchableHighlight,
   StatusBar,
-  FlatList,
-  TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { globalStyle } from "../globals";
 import Search from "./Search";
-import {decode} from 'html-entities';
 
 export default function Header({ navigation, product, setDrawer }) {
   const [visible, setVisible] = useState(false);
@@ -34,7 +28,7 @@ export default function Header({ navigation, product, setDrawer }) {
   return (
     <View style={{ marginTop: StatusBar.currentHeight }}>
       <View
-        style={[globalStyle.flexRow, globalStyle.flexBetween, styles.header, {backgroundColor: "#eee"}]}
+        style={[globalStyle.flexRow, globalStyle.flexBetween, styles.header, {borderBottomColor: "#eee", borderBottomWidth: 1}]}
       >
         <Ionicons
           name="menu-outline"
