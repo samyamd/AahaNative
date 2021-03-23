@@ -51,7 +51,6 @@ export default function NewPage({ navigation, route }) {
       <ActivityIndicator
         color='black'
         size='large'
-        style={{ flex: 1 }}
       />
     )}
     onNavigationStateChange={navState => {

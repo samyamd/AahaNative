@@ -4,24 +4,23 @@ import {
   Text,
   View,
   FlatList,
-  Dimensions,
-  Modal,
-  TouchableOpacity,
+  Dimensions,  
+  ActivityIndicator
 } from "react-native";
 import { globalStyle } from "../globals";
 import Header from "./header";
 import ItemCard from "./itemCard";
 import Footer from "./Footer";
-// import ImageSlider from "./ImageSlider";
-// import BottomNav from "./BottomNav";
-import { Ionicons } from "@expo/vector-icons";
 import Category from "./Category";
+import NavDrawer from "./NavDrawer";
+import ImageSlider from "./ImageSlider";
 
 export default function Home({ navigation }) {
   var width = Dimensions.get("window").width;
   // const entities = Html5Entities();
   const [product, setProduct] = useState([]);
   const [drawer, setDrawer] = useState(false);
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     fetch("https://aahashop.com/wp-json/wp/v2/product")
@@ -30,45 +29,35 @@ export default function Home({ navigation }) {
       .catch((error) => console.error(error));
   }, []);
 
+  useEffect(() => {
+    fetch("https://aahashop.com/wp-json/wp/v2/categories")
+      .then((response) => response.json())
+      .then((json) => setCategory(json))
+      .catch((error) => console.error(error));
+  }, []);  
+
+  // const renderAccordians = () => {
+  //   const items = [];
+  //   for (item of menu) {
+  //       items.push(
+  //           <Accordian 
+  //               title = {item.title}
+  //               data = {item.data}
+  //           />
+  //       );
+  //   }
+  //   return items;
+  // };
+
   return (
-    <View style={{ flex: 1,backgroundColor: "#FFF" }}>
-      <Header
-        product={product}
-        navigation={navigation}
-        setDrawer={setDrawer}
-      />
-      {drawer ? (
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={drawer}
-          onRequestClose={() => {
-            console.log("OUT");
-            setDrawer(false);
-          }}
-        >
-          <TouchableOpacity style={globalStyle.drawer} activeOpacity={1}>
-            <View style={{ backgroundColor: "#FFF", padding: 10 }}>
-              <TouchableOpacity style={{ alignItems: "flex-end" }}>
-                <Ionicons
-                  name="close-outline"
-                  style={globalStyle.font100}
-                  onPress={() => setDrawer(false)}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={{ padding: 10 }}>
-              <Text>Here you put the content of your modal.</Text>
-            </View>
-          </TouchableOpacity>
-        </Modal>
-      ) : null
-      }
+    <View style={{ flex: 1, backgroundColor: "#FFF" }}>
+      <Header product={product} navigation={navigation} setDrawer={setDrawer} />
+      {drawer ? (<NavDrawer drawer={drawer} setDrawer={setDrawer} category={category} />) : null}
       <FlatList
-        style={{ flex: .8 }}
+        style={{ flex: 0.8 }}
         ListHeaderComponent={
           <View>
-            {/* <ImageSlider /> */}
+            <ImageSlider />
 
             <Text
               style={[globalStyle.h1, globalStyle.textCenter, globalStyle.m35]}
@@ -77,7 +66,7 @@ export default function Home({ navigation }) {
             </Text>
           </View>
         }
-        ListEmptyComponent={<Text>Loading</Text>}
+        ListEmptyComponent={<ActivityIndicator size="small" color="#131A46" />}
         keyExtractor={(item) => item.id.toString()}
         horizontal={false}
         numColumns={width > 600 ? 2 : 1}
@@ -91,7 +80,7 @@ export default function Home({ navigation }) {
         )}
         ListFooterComponent={
           <View>
-            <View style={{ backgroundColor: "#ffffff" }}>
+            <View style={{ backgroundColor: "#ffffff"}}>
               <Text
                 style={[
                   globalStyle.h1,
@@ -102,7 +91,7 @@ export default function Home({ navigation }) {
                 Offered Categories
               </Text>
             </View>
-            <Category navigation={navigation} />
+            <Category product={product} navigation={navigation} category={category} setDrawer={setDrawer} />
             <Footer navigation={navigation} />
           </View>
         }

@@ -5,6 +5,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { globalStyle } from "../globals";
 import {decode} from 'html-entities';
@@ -37,7 +38,7 @@ export default function ItemCard({ product, navigation }) {
       >
         <View style={[styles.cardHeader]}>
           {loading ? (
-            <Text>Loading</Text>
+              <ActivityIndicator size="small" color="#131A46" />
           ) : (
             <Image
               style={{ height: 120, width: 120 }}
