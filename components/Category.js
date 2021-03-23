@@ -14,6 +14,17 @@ import Carousel from "react-native-snap-carousel";
 import ItemCard from "./itemCard";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
+const WIDTH = Math.round(SLIDER_WIDTH / 2.6);
+const ITEM_HORIZONTAL_MARGIN = 15;
+let ITEM_WIDTH;
+if (SLIDER_WIDTH > 600) {
+  ITEM_WIDTH = WIDTH + ITEM_HORIZONTAL_MARGIN * 2;
+}
+else {
+  ITEM_WIDTH = SLIDER_WIDTH - ITEM_HORIZONTAL_MARGIN;
+}
+console.log(ITEM_WIDTH);
+
 
 export default function Category({ navigation, category, setDrawer, product }) {
   const [index, setIndex] = useState(0);
@@ -84,23 +95,23 @@ export default function Category({ navigation, category, setDrawer, product }) {
       />
       <Carousel
         layout={"tinder"}
-        layoutCardOffset={20}
-        ref={(c) => {
-          _carousel = c;
-        }}
+        // ref={(c) => {
+        //   _carousel = c;
+        // }}
         data={product}
         renderItem={({ item, index }) => (
-          <View style={styles.itemContainer}>
             <ItemCard
               product={item}
               navigation={navigation}
               setDrawer={setDrawer}
             />
-          </View>
+          
           // <Text>{item.title}</Text>
         )}
+        // sliderWidth={SLIDER_WIDTH}
+        // itemWidth={400}
         sliderWidth={SLIDER_WIDTH}
-        itemWidth={400}
+        itemWidth={ITEM_WIDTH}      
         activeSlideOffset={20}
         inactiveSlideShift={0}
         onSnapToItem={(index) => setIndex(index)}
@@ -111,11 +122,3 @@ export default function Category({ navigation, category, setDrawer, product }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  itemContainer: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -54,7 +54,6 @@ export default function Home({ navigation }) {
       <Header product={product} navigation={navigation} setDrawer={setDrawer} />
       {drawer ? (<NavDrawer drawer={drawer} setDrawer={setDrawer} category={category} />) : null}
       <FlatList
-        style={{ flex: 0.8 }}
         ListHeaderComponent={
           <View>
             <ImageSlider />
@@ -79,8 +78,8 @@ export default function Home({ navigation }) {
           />
         )}
         ListFooterComponent={
-          <View>
-            <View style={{ backgroundColor: "#ffffff"}}>
+          <>
+            <View style={{ backgroundColor: "#777"}}>
               <Text
                 style={[
                   globalStyle.h1,
@@ -93,7 +92,7 @@ export default function Home({ navigation }) {
             </View>
             <Category product={product} navigation={navigation} category={category} setDrawer={setDrawer} />
             <Footer navigation={navigation} />
-          </View>
+          </>
         }
       />
 

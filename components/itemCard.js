@@ -30,7 +30,7 @@ export default function ItemCard({ product, navigation }) {
     <View style={{flex: 1}}>
     {/* <View> */}
       <TouchableOpacity
-        style={[styles.card, styles.centred]}
+        style={[styles.card, styles.centred, {elevation: 10}]}
         // style={[styles.card, styles.centred, {alignSelf: "center"}]}
         onPress={() => {
           navigation.navigate("Aahashop", { uri: product.link });
